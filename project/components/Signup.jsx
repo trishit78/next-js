@@ -1,28 +1,29 @@
 "use client";
 
-import axios from "axios";
+import { signup } from "@/app/actions/user";
+//import axios from "axios";
 import React, { useState } from "react";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = async () => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/user", {
-        email,
-        password,
-      });
+  // const handleSignup = async () => {
+  //   try {
+  //     const res = await axios.post("http://localhost:3000/api/user", {
+  //       email,
+  //       password,
+  //     });
 
-      console.log("Signup successful:", res.data);
-      alert("Signup successful!");
-      setEmail("");
-      setPassword("");
-    } catch (err) {
-      console.error("Signup error:", err.response?.data || err.message);
-      alert("Signup failed: " + (err.response?.data?.message || "Server error"));
-    }
-  };
+  //     console.log("Signup successful:", res.data);
+  //     alert("Signup successful!");
+  //     setEmail("");
+  //     setPassword("");
+  //   } catch (err) {
+  //     console.error("Signup error:", err.response?.data || err.message);
+  //     alert("Signup failed: " + (err.response?.data?.message || "Server error"));
+  //   }
+  // };
 
   return (
     <div className="max-w-sm mx-auto mt-20 p-6 rounded-2xl shadow-lg bg-white">
@@ -45,7 +46,12 @@ export default function Signup() {
       />
 
       <button
-        onClick={handleSignup}
+        onClick={
+          async ()=>{
+            const res = await signup(email,password);
+            console.log(res)
+          }
+        }
         className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
       >
         Sign Up
